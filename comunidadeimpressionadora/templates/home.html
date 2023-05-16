@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+
+{% block body %}
+    <div class="container">
+        <h1 style="color: MediumTurquoise">Programu - Comunidade Programadora</h1>
+        <h3 class="mt-2">Alunos e experts de diversas linguagens.</h3>
+        <hr>
+        {% for post in posts %}
+        <div class="row border mb-4 p-3 meupost" >
+            <div class="col col-2">
+                <div class="image pe-2">
+                <img src="{{url_for('static', filename='fotos_perfil/{}'.format(post.autor.foto_perfil))}}" class="rounded" width="200" >
+                </div>
+                <strong>{{ post.autor.username }}</strong>
+                <div class="row justify-content-center">
+                    {% if post.autor.cursos %}
+                        {% for curso in post.autor.cursos.split(';') %}
+                            <button type="button" class="btn btn-info mt-2" disabled><strong>{{ curso }}</strong></button>
+                        {% endfor %}
+                    {% else %}
+                            <button type="button" class="btn btn-info mt-2" disabled><strong>Não Informado</strong></button>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col col-9">
+                <a style="color: MediumTurquoise; text-decoration: none" href="{{ url_for('exibir_post', post_id=post.id) }}"><h3>{{ post.titulo }}</h3></a>
+                <p>{{ post.corpo }}</p>
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+
+{% endblock %}
